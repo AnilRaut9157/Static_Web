@@ -15,12 +15,21 @@ resource "azurerm_storage_account" "mystorageaccountnew" {
   }
 }
 
+# resource "azurerm_storage_blob" "index_html" {
+#   name                   = "index.html"                # Name of the HTML file
+#   storage_account_name   = azurerm_storage_account.mystorageaccountnew.name
+#   storage_container_name = "$web"                     # Use the special container "$web" for static websites
+#   type                   = "Block"
+#   content_type           = "text/html"
+#   source                 = "C:/Users/rauta/OneDrive/Desktop/DemoHosting/index.html" # Path to your local HTML file
+# }
+
 resource "azurerm_storage_blob" "index_html" {
-  name                   = "index.html"                # Name of the HTML file
+  name                   = "index.html"
   storage_account_name   = azurerm_storage_account.mystorageaccountnew.name
-  storage_container_name = "$web"                     # Use the special container "$web" for static websites
+  storage_container_name = "$web"
   type                   = "Block"
-  content_type           = "text/html"
-  source                 = "C:/Users/rauta/OneDrive/Desktop/DemoHosting/index.html" # Path to your local HTML file
+  source                 = "C:/Users/rauta/OneDrive/Desktop/DemoHosting/index.html"
 }
+
 
