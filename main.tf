@@ -8,12 +8,12 @@ data "http" "index_html" {
 }
 
 resource "azurerm_resource_group" "myresourcegroup" {
-  name     = "example-resources"
+  name     = "deploying-new-resources-group"
   location = "West Europe"
 }
 
 resource "azurerm_storage_account" "mynewstorageaccount" {
-  name                     = "examplestoracc"  # Must be globally unique
+  name                     = "newdeploydemostorage"  # Must be globally unique
   resource_group_name      = azurerm_resource_group.myresourcegroup.name
   location                 = azurerm_resource_group.myresourcegroup.location
   account_tier             = "Standard"
@@ -25,16 +25,16 @@ resource "azurerm_storage_account" "mynewstorageaccount" {
   }
 }
 
-resource "azurerm_storage_container" "web" {
-  name                  = "$web"  # Use the special container for static websites
-  storage_account_name  = azurerm_storage_account.mynewstorageaccount.name
-  container_access_type = "private" # You may set this to 'public' if desired
-}
+# resource "azurerm_storage_container" "web" {
+#   name                  = "$web"  # Use the special container for static websites
+#   storage_account_name  = azurerm_storage_account.mynewstorageaccount.name
+#   container_access_type = "private" # You may set this to 'public' if desired
+# }
 
 resource "azurerm_storage_blob" "index_html" {
   name                   = "index.html"                     # Name of the HTML file
   storage_account_name   = azurerm_storage_account.mynewstorageaccount.name
-  storage_container_name = azurerm_storage_container.web.name
+  storage_container_name = "$web" 
   type                   = "Block"
   source_content         = data.http.index_html.body
 }
