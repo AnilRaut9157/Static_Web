@@ -18,7 +18,17 @@ resource "azurerm_storage_account" "myazurestorage" {
   }
 }
 
-# # Output the URL of the static website
-# output "static_website_url" {
-#   value = azurerm_storage_account.myazurestorage.primary_web_endpoint
-# }
+resource "azurerm_storage_container" "web_container" {
+  name                  = "$web"                       # Use the special container name for static websites
+  storage_account_name  = azurerm_storage_account.myazurestorage.name
+  container_access_type = "private"                    # Set access type to private
+}
+
+# Upload the index.html file to the $web container
+resource "azurerm_storage_blob" "index_html" {
+  name                   = "index.html"                              # Name of the HTML file
+  storage_account_name   = azurerm_storage_account.myazurestorage.name
+  storage_container_name = azurerm_storage_container.web_container.name
+  type                   = "Block"                                   # Blob type
+  source                 = "C:\\Users\\rauta\\OneDrive\\Desktop\\DemoHosting\\index.html"            # Path to your local index.html file
+}
