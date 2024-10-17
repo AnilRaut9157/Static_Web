@@ -1,10 +1,8 @@
-provider "azurerm" {
-  features {}
-}
+
 
 # Create a Resource Group
 resource "azurerm_resource_group" "azurergforstaticweb" {
-  name     = "is-my-new-resources"  # Name of the resource group
+  name     = "it-is-my-new-resources"  # Name of the resource group
   location = "East US"             # Location for the resource group
 }
 
