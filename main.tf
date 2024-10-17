@@ -15,10 +15,19 @@ resource "azurerm_storage_account" "mynewstorageaccount" {
   }
 }
 
-resource "azurerm_storage_blob" "index_html" {
-  name                   = "index.html"                # Name of the HTML file
-  storage_account_name   = azurerm_storage_account.mynewstorageaccount.name
-  storage_container_name = "$web"                     # Use the special container "$web" for static websites
-  type                   = "Block"
-  source                 = "D:/HtmlPrograms/index.html" # Path to your local HTML file
+# Explicitly create the $web container for the static website
+resource "azurerm_storage_container" "web_container" {
+  name                  = "$web"  # Special container for static website hosting
+  storage_account_name  = azurerm_storage_account.mynewstorageaccount.name
+  container_access_type = "blob"  # Blob access type to allow public access to the static website files
 }
+
+resource "azurerm_storage_blob" "index_html" {
+  name                   = "index.html"                              # Name of the HTML file
+  storage_account_name   = azurerm_storage_account.mynewstorageaccount.name
+  storage_container_name = azurerm_storage_container.web_container.name
+  type                   = "Block"
+  source                 = "C:\\Users\\rauta\\OneDrive\\Desktop\\DemoHosting\\index.html"              # Path to your local HTML file
+}
+
+
