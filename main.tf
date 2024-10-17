@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "azurergforstaticweb" {
 
 # Create a Storage Account with Static Website Hosting Enabled
 resource "azurerm_storage_account" "myazurestorage" {
-  name                     = "my-new-azure-storage"            # Storage account name (must be globally unique)
+  name                     = "my-new-storage10121"            # Storage account name (must be globally unique)
   resource_group_name      = azurerm_resource_group.azurergforstaticweb.name
   location                 = azurerm_resource_group.azurergforstaticweb.location
   account_tier             = "Standard"                   # Account tier
