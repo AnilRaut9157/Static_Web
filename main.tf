@@ -21,6 +21,6 @@ resource "azurerm_storage_blob" "index_html" {
   storage_container_name = "$web"                     # Use the special container "$web" for static websites
   type                   = "Block"
   content_type           = "text/html"
-  source                 = "C:/Users/rauta/OneDrive/Desktop/hh/index.html" # Path to your local HTML file
+  source                 = "C:/Users/rauta/OneDrive/Desktop/DemoHosting/index.html" # Path to your local HTML file
 }
 
