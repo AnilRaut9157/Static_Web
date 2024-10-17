@@ -1,9 +1,9 @@
 resource "azurerm_resource_group" "myresourcegroup" {
-  name     = "my-resource-demo-new"  # Updated name of your resource group
+  name     = "my-new-resource-group"  # Updated name of your resource group
   location = "West US"                # Updated location for your resources
 }
 
-resource "azurerm_storage_account" "mystorageaccount" {
+resource "azurerm_storage_account" "mynewstorageaccount" {
   name                     = "uniqueaccountdemo123"  # Updated unique storage account name
   resource_group_name      = azurerm_resource_group.myresourcegroup.name
   location                 = azurerm_resource_group.myresourcegroup.location
@@ -17,7 +17,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
 
 resource "azurerm_storage_blob" "index_html" {
   name                   = "index.html"                # Name of the HTML file
-  storage_account_name   = azurerm_storage_account.mystorageaccount.name
+  storage_account_name   = azurerm_storage_account.mynewstorageaccount.name
   storage_container_name = "$web"                     # Use the special container "$web" for static websites
   type                   = "Block"
   source                 = "D:/HtmlPrograms/index.html" # Path to your local HTML file
