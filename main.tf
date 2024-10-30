@@ -23,5 +23,5 @@ resource "azurerm_storage_blob" "index_html" {
   storage_account_name   = azurerm_storage_account.myazurestorage.name
   storage_container_name = "$web"        # Directly upload to the $web container for static website
   type                   = "Block"
-  source                 = "D:\test\index.html"  # Path to your local file
+  source                 = "C:\teraform\index.html"  # Path to your local file
 }
