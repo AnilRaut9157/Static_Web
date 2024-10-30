@@ -17,24 +17,18 @@ resource "azurerm_storage_account" "myazurestorage" {
   }
 }
 
-# Download index.html from GitHub
-resource "null_resource" "download_index_html" {
-  provisioner "local-exec" {
-    command = "curl -o ./index.html https://raw.githubusercontent.com/AnilRaut9157/Static_Web/main/index.html"
-  }
-
-  # Ensure the file is downloaded before uploading
-  triggers = {
-    index_html_version = timestamp()
-  }
+# Create a Local Index HTML File
+resource "local_file" "index_html_file" {
+  filename = "${path.module}/index.html"
+  content  = "<html><body><h1>Welcome to My Static Website!</h1></body></html>"
 }
 
-# Upload the HTML file to the Static Website Container
+# Upload the HTML File to the Static Website Container
 resource "azurerm_storage_blob" "index_html" {
-  depends_on             = [null_resource.download_index_html]
+  depends_on             = [local_file.index_html_file]
   name                   = "index.html"  # File name in the container
   storage_account_name   = azurerm_storage_account.myazurestorage.name
   storage_container_name = "$web"        # Directly upload to the $web container for static website
   type                   = "Block"
-  source                 = "./index.html"  # Path to the locally downloaded file
+  source                 = local_file.index_html_file.filename  # Path to the local file created
 }
