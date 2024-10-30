@@ -17,18 +17,11 @@ resource "azurerm_storage_account" "myazurestorage" {
   }
 }
 
-# Create a Local Index HTML File
-resource "local_file" "index_html_file" {
-  filename = "${path.module}/index.html"
-  content  = "<html><body><h1>Welcome to My Static Website!</h1></body></html>"
-}
-
 # Upload the HTML File to the Static Website Container
 resource "azurerm_storage_blob" "index_html" {
-  depends_on             = [local_file.index_html_file]
   name                   = "index.html"  # File name in the container
   storage_account_name   = azurerm_storage_account.myazurestorage.name
   storage_container_name = "$web"        # Directly upload to the $web container for static website
   type                   = "Block"
-  source                 = local_file.index_html_file.filename  # Path to the local file created
+  source                 = "C:/Users/rauta/OneDrive/Desktop/DemoHosting/index.html"  # Path to your local file
 }
